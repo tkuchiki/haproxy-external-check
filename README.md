@@ -1,0 +1,1 @@
+# haproxy-external-check
