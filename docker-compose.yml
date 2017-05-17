@@ -1,0 +1,28 @@
+version: '2'
+services:
+  db01:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - 3306
+  db02:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - 3306
+  haproxy:
+    build: ./haproxy/
+    hostname: haproxy
+    links:
+      - db01
+      - db02
+      - consul
+  consul:
+    image: consul
+    hostname: consul
+    environment:
+      CONSUL_LOCAL_CONFIG: '{"skip_leave_on_interrupt": true}'
